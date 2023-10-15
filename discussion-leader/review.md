@@ -29,24 +29,32 @@ Virtualization is a powerful tool that can do a lot more than just provide isola
 ## Pros (3-6 bullets)
 - Able to use existing commodity OSes without significant modifications
 - The Virtual Machine Monitor is relatively simple, with much fewer lines of code than true OSes (easy to develop and maintain)
-- Captures performance benefits of large-scale systems while improving overheads compared to previous VMM's
+- Captures performance benefits of large-scale systems and improves overheads compared to previous VMM's
 
 ## Cons (3-6 bullets)
 - Virtualization overheads still exist, and so may not capture as much performance benefits as a purpose-made large-scale OS
-- Their initial implementation is tightly coupled to hardware
-- Less complete isolation of virtual machines than previous VMM's
+- Their initial implementation is tightly coupled to hardware (in terms of necessary changes to commodity OSes)
+- Less complete isolation of virtual machines than previous VMM's due to sharing of memory
 
 ### What is your analysis of the proposed?
 
 Summarize and justify what your evaluation of the paper is. 
 
-This paper seems prescient, published in 1997 it sets the stage for the cloud computing boom two decades later, with the ability to easily rent parts of servers to run VMs and the distributed approach to computing that comes with it. Time has shown that the idea of running commodity OSes on parts of a larger system is one which people are eager to pay for.  And overall the description of the mechanisms and evaluation is mostly clear and easy to understand.  Most of their design choices seem well justified.
+This paper seems prescient, published in 1997 it sets the stage for the cloud computing boom two decades later, with the ability to easily rent parts of servers to run VMs and the distributed approach to computing that comes with it. Time has shown that the idea of running commodity OSes on parts of a larger system is one which people are eager to pay for.  And the descriptions of their mechanisms and evaluation is mostly clear and easy to understand.  Most of their design choices seem well justified.
 
 ## Details Comments, Observations, Questions
 
+I had no idea that the concept of VMM's was developed so long ago, before this paper.
+
 Is it not possible to provide a still simple mechanism for handling privileged code execution with less overhead?
-Should existing commodity OSes have to modified in any fashion in order to work with a VMM?
-Don't exactly understand the use cases for replicating and moving the "physical" memory pages of commodity OSes in machine memory.
+
+Should existing OSes have to modified in any fashion in order to work with a VMM?
+
+Don't exactly understand the use cases for replicating and moving the "physical" memory pages of commodity OSes in machine memory.  Is this inherent to "non-uniform" memory systems?  And what exactly does non-uniform memory even mean?
+
+Why is it beneficial to have some parts of the kernel address space be directly mapped to hardware addresses (bypassing the TLB)?
+
+The legend in Figure 3 doesn't make sense - all three types of pages look the same
 
 
 

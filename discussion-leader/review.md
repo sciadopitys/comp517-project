@@ -15,7 +15,7 @@ The aforementioned large-scale shared memory, multiprocessor systems were desira
 Systems programmers can be spared from having to substantially redesign OSes to work on these new systems by instead running multiple OSes on a system using a VMM, and having the VMM address certain low-level details. However, prior to Disco VMMs were not widely used due to a number of established issues, such as significant performance and memory overheads
 
 ### Hypothesis, Key Idea, or Main Claim
-A VMM that simultatiously runs multiple (slightly modified) commodity OSes on recent large scale systems can capture the performance benefits of the hardware improvements without needing systems programmers to develop full custom OSes.  Furthermore, modifications to the underlying mechanisms of the VMM can improve performance and allow sharing of system resources between VMs.
+A VMM that simultatiously runs multiple (slightly modified) OSes on recent large scale systems can capture the performance benefits of the hardware improvements without needing systems programmers to develop full custom OSes.  Furthermore, modifications to the underlying mechanisms of the VMM can improve performance and allow sharing of system resources between VMs.
 
 ### Method for Proving the Claim
 They prove their claim by implementing their Disco VMM and benchmarking it in simulation against alternative options.  They describe their VMM implementation in terms of 3 main areas - CPU, memory, and I/O.
@@ -33,14 +33,14 @@ Virtualization is a powerful tool that can do a lot more than just provide isola
 
 ## Cons (3-6 bullets)
 - Virtualization overheads still exist, and so may not capture as much performance benefits as a purpose-made large-scale OS
-- Their initial implementation is tightly coupled to hardware (in terms of necessary changes to commodity OSes)
+- Their initial implementation is tightly coupled to hardware (in terms of necessary changes to the OSes)
 - Less complete isolation of virtual machines than previous VMM's due to sharing of memory
 
 ### What is your analysis of the proposed?
 
 Summarize and justify what your evaluation of the paper is. 
 
-This paper seems prescient, published in 1997 it sets the stage for the cloud computing boom two decades later, with the ability to easily rent parts of servers to run VMs and the distributed approach to computing that comes with it. Time has shown that the idea of running commodity OSes on parts of a larger system is one which people are eager to pay for.  And the descriptions of their mechanisms and evaluation is mostly clear and easy to understand.  Most of their design choices seem well justified.
+This paper seems prescient, published in 1997 it sets the stage for the cloud computing boom two decades later, with the ability to easily rent parts of servers to run VMs and the distributed approach to computing that comes with it. Time has shown that the idea of running OSes on parts of a larger system is one which people are eager to pay for.  And the descriptions of their mechanisms and evaluation is mostly clear and easy to understand.  Most of their design choices seem well justified.  However, it is true that some of their methods for decreasing VMM overheads are modifications of existing OSes, rather than changes in the VMM implementation.
 
 ## Details Comments, Observations, Questions
 
@@ -48,9 +48,9 @@ I had no idea that the concept of VMM's was developed so long ago, before this p
 
 Is it not possible to provide a still simple mechanism for handling privileged code execution with less overhead?
 
-Should existing OSes have to modified in any fashion in order to work with a VMM?
+Should existing OSes have to modified in any fashion in order to run efficiently in a VMM?
 
-Don't exactly understand the use cases for replicating and moving the "physical" memory pages of commodity OSes in machine memory.  Is this inherent to "non-uniform" memory systems?  And what exactly does non-uniform memory even mean?
+Don't exactly understand the use cases for replicating and moving the "physical" memory pages of OSes in machine memory.  Is this inherent to "non-uniform" memory systems?  And what exactly does non-uniform memory even mean?
 
 Why is it beneficial to have some parts of the kernel address space be directly mapped to hardware addresses (bypassing the TLB)?
 

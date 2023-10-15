@@ -24,23 +24,25 @@ They prove their claim by implementing their Disco VMM and benchmarking it in si
 They evaluate their solution based on the quantitative benchmarks provided in the paper, such as determining the memory load and scalability on various workloads.  Overall, 
 
 ### Contributions: what we take away
-Virtualization is a powerful tool that can do a lot more than just provide isolation, in this case it is used to boost compatibility and, more surpisingly, performance.  The VMM approach developed in this paper seems to have greatly informed the design of what came to be known as "hypervisors".
+Virtualization is a powerful tool that can do a lot more than just provide isolation, in this case it is used to boost compatibility and, more surpisingly, performance.  The VMM approach developed in this paper seems to have greatly informed the design of what came to be known as "hypervisors", which have been in use ever since.
 
 ## Pros (3-6 bullets)
 - Able to use existing commodity OSes without significant modifications
 - The Virtual Machine Monitor is relatively simple, with much fewer lines of code than true OSes (easy to develop and maintain)
-- Captures performance benefits of large-scale systems and improves overheads compared to previous VMM's
+- Captures performance benefits of large-scale multiprocessor systems
+- Improves overheads compared to previous VMM's
 
 ## Cons (3-6 bullets)
 - Virtualization overheads still exist, and so may not capture as much performance benefits as a purpose-made large-scale OS
 - Their initial implementation is tightly coupled to hardware (in terms of necessary changes to the OSes)
 - Less complete isolation of virtual machines than previous VMM's due to sharing of memory
+- Didn't address possible drawbacks of this memory sharing
 
 ### What is your analysis of the proposed?
 
 Summarize and justify what your evaluation of the paper is. 
 
-This paper seems prescient, published in 1997 it sets the stage for the cloud computing boom two decades later, with the ability to easily rent parts of servers to run VMs and the distributed approach to computing that comes with it. Time has shown that the idea of running OSes on parts of a larger system is one which people are eager to pay for.  And the descriptions of their mechanisms and evaluation is mostly clear and easy to understand.  Most of their design choices seem well justified.  However, it is true that some of their methods for decreasing VMM overheads are modifications of existing OSes, rather than changes in the VMM implementation.
+This paper seems prescient, published in 1997 it sets the stage for the cloud computing boom two decades later, with the ability to easily rent parts of servers to run VMs and the distributed approach to computing that comes with it. Time has shown that the idea of running OSes on parts of a larger system is one which people are eager to pay for.  And the descriptions of their mechanisms and evaluation are mostly clear and easy to understand.  However, we would like them to have some discussion about the possible tradeoffs of their novel VMM mechanisms compared to the traditional, fully isolated case.  It is also true that some of their methods for decreasing VMM overheads are modifications of existing OSes, rather than changes in the VMM implementation.
 
 ## Details Comments, Observations, Questions
 

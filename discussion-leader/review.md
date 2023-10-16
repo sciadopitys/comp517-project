@@ -47,19 +47,21 @@ This paper seems prescient, published in 1997 it sets the stage for the cloud co
 
 We had no idea that the concept of VMMs was developed so long ago, before this paper.
 
-Legends in their figures are somewhat difficult to understand
+Legends in their figures are somewhat difficult to understand.
+
+We hadn't heard of non-uniform memory before.
 
 ### Discussion Qs
 
-Is it not possible to provide a relatively simple mechanism for handling privileged code execution with less overhead?
+Is it possible to provide a relatively simple mechanism for handling privileged code execution with less overhead?
 
-Are VMMs similar in concept to microkernels?  Do they work better in practice?
+Are VMMs similar in concept to microkernels?  Why have they seen more “mainstream” use?
 
 Should existing OSes have to be modified in any fashion in order to run efficiently in a VMM? 
 
 Why do the authors care so much about using commodity OSes? Do you agree with them?
 
-Don't exactly understand the use cases for replicating and moving the "physical" memory pages of OSes in machine memory.  Is this inherent to "non-uniform" memory systems?  And what exactly does non-uniform memory even mean?
+What are the use cases for replicating and moving the "physical" memory pages of OSes in machine memory. Is this inherent to "non-uniform" memory systems? 
 
 Why is it beneficial to have some parts of the kernel address space be directly mapped to hardware addresses (bypassing the TLB)?
 

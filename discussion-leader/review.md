@@ -47,18 +47,26 @@ This paper seems prescient, published in 1997 it sets the stage for the cloud co
 
 I had no idea that the concept of VMM's was developed so long ago, before this paper.
 
+Legends in their figures are somewhat difficult to understand
+
+### Discussion Qs
+
 Is it not possible to provide a still simple mechanism for handling privileged code execution with less overhead?
 
 Are VMM's similar in concept to microkernels?  Do they work better in practice?
 
-Should existing OSes have to modified in any fashion in order to run efficiently in a VMM?
+Should existing OSes have to modified in any fashion in order to run efficiently in a VMM? 
+
+Why do the authors care so much about using commodity OSes? Do you agree with them?
 
 Don't exactly understand the use cases for replicating and moving the "physical" memory pages of OSes in machine memory.  Is this inherent to "non-uniform" memory systems?  And what exactly does non-uniform memory even mean?
 
 Why is it beneficial to have some parts of the kernel address space be directly mapped to hardware addresses (bypassing the TLB)?
 
-Legends in their figures are somewhat difficult to understand
+Do you think the ability to run multiple OSes simultaniously is valuable? Do you see this as a main advantage an advantage of using a VMM or is it just a party-trick?
 
+How do you feel about the level of isolation between various VMs, should a VMM provide more security features and more complex objects for isolation?
 
+What are the advantages and disadvantages of using a single system with a large amount of memories and proccessors with many OSes, vesus than multiple smaller systems each with one OS all networked together? Which would you choose?
 
 

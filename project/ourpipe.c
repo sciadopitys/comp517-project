@@ -125,11 +125,12 @@ int main(int argc, char *argv[]) {
         {"pipelinenum", required_argument, 0, 'n'},
         {0, 0, 0, 0}
     };
-    
+
+
     int n_preset_pipelines = 3;
     char *preset_pipelines[] = {"ls | wc", "ls -l | grep ourpipe", "ls -l | grep ourpipe | wc"};
 
-    while ((opt = getopt_long(argc, argv, "hpli:", long_options, &option_index)) != -1) {
+    while ((opt = getopt_long(argc, argv, "hp:l:n:", long_options, &option_index)) != -1) {
         switch (opt) {
             case 'h':
                 printf("This is the master program to test all of our different pipes.\n");
@@ -147,6 +148,7 @@ int main(int argc, char *argv[]) {
                 break;
         }
     }
+
 
     while (selected_pipe <= 0 || selected_pipe > n_pipes) {
         printf("Please select a pipe to test:\n");

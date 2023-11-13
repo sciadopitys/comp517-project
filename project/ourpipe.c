@@ -126,8 +126,8 @@ int main(int argc, char *argv[]) {
         {0, 0, 0, 0}
     };
     
-    int n_preset_pipelines = 2;
-    char *preset_pipelines[] = {"ls | wc", "ls -l | grep ourpipe"};
+    int n_preset_pipelines = 3;
+    char *preset_pipelines[] = {"ls | wc", "ls -l | grep ourpipe", "ls -l | grep ourpipe | wc"};
 
     while ((opt = getopt_long(argc, argv, "hpli:", long_options, &option_index)) != -1) {
         switch (opt) {
@@ -165,7 +165,7 @@ int main(int argc, char *argv[]) {
         }
     }
 
-    while (selected_preset_pipe < 0 || selected_preset_pipe > n_preset_pipelines) {
+    while (pipeline[0] == '\0' && (selected_preset_pipe < 0 || selected_preset_pipe > n_preset_pipelines)) {
         printf("Please select a pipeline to run:\n");
 
         printf("(0) Enter custom string\n");

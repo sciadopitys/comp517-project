@@ -7,6 +7,7 @@
 #include "ourpipe.h"
 
 // our pipes
+#include "truepipe.h"
 #include "filepipe.h"
 
 char **split_args(char *str){
@@ -113,10 +114,11 @@ int main(int argc, char *argv[]) {
 
     char *pipeline = "";
 
-    int n_pipes = 1;
-    pipe_info *pipes[n_pipes];
-
-    pipes[0] = filepipe_get();
+    int n_pipes = 2;
+    pipe_info *pipes[] = {
+        truepipe_get(),
+        filepipe_get()
+    };
 
     static struct option long_options[] = {
         {"help", no_argument, 0, 'h'},

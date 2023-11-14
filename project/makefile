@@ -6,13 +6,13 @@ CFLAGS=-Wall -g
 TARGET=ourpipe
 
 # Source files
-SRCS=ourpipe.c filepipe.c
+SRCS=ourpipe.c filepipe.c truepipe.c
 
 # Object files
 OBJS=$(SRCS:.c=.o)
 
 # Header files
-HDRS=ourpipe.h filepipe.h
+HDRS=ourpipe.h filepipe.h truepipe.h
 
 # Default target
 all: $(TARGET)

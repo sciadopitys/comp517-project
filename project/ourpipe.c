@@ -3,6 +3,7 @@
 #include <getopt.h>
 #include <string.h>
 #include <unistd.h>
+#include <time.h>
 
 #include "ourpipe.h"
 
@@ -207,7 +208,16 @@ int main(int argc, char *argv[]) {
     }
 
     // printf("running pipe %d\n", selected_pipe);
+    clock_t start, end;
+    double cpu_time;
+
+    start = clock();
+    
     test_pipe(pipes[selected_pipe-1]->pipefn, pipeline, selected_pipe);
+
+    end = clock();
+    cpu_time = ((double) (end - start)) / CLOCKS_PER_SEC;
+    printf("%f total CPU time\n", cpu_time);
 
     return 0;
 }

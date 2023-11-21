@@ -27,6 +27,9 @@ void filepipefn(char** left, char** right, int length) {
     char buf[12];
     snprintf(buf, 12, "pipe_%d", length);
     int fdr = open(buf, O_CREAT|O_RDWR|O_TRUNC, S_IRUSR|S_IWUSR);
+    /*int fdr = socket(AF_LOCAL, SOCK_DGRAM, 0)*/
+    /*int fdr = open("/tmp", O_RDWR|O_TMPFILE, S_IRUSR|S_IWUSR);*/
+    /*int fdr = open(buf, O_CREAT|O_RDWR|O_TRUNC, S_IRUSR|S_IWUSR);*/
     
     if (fdr < 0)
     {

@@ -30,13 +30,14 @@ void filepipefn(char** left, char** right, int length) {
     snprintf(buf, 12, "pipe_%d", length);
     /*int fdr = open(buf, O_CREAT|O_RDWR|O_TRUNC, S_IRUSR|S_IWUSR);*/
     int fdr = socket(AF_LOCAL, SOCK_DGRAM, 0);
-    int dummy = socket(AF_LOCAL, SOCK_DGRAM, 0);
+    int dummy = socket(AF_LOCAL, SOCK_STREAM, 0);
     /*int fdr = open("/tmp", O_RDWR|O_TMPFILE, S_IRUSR|S_IWUSR);*/
     /*int fdr = open(buf, O_CREAT|O_RDWR|O_TRUNC|O_SYNC, S_IRUSR|S_IWUSR);*/
     
     if (fdr < 0)
     {
         printf("something went wrong: %s", strerror(errno));
+        perror("file creation failed");
     }
     
     struct sockaddr_in address;
@@ -52,6 +53,8 @@ void filepipefn(char** left, char** right, int length) {
         perror("bind failed");
     }
     
+    /*
+    
     int connect_sock = connect(dummy, (struct sockaddr *)&address, addrlen);
     if (connect_sock < 0)
     {
@@ -63,7 +66,7 @@ void filepipefn(char** left, char** right, int length) {
     {
         printf("something went wrong: %s", strerror(errno));
         perror("accept failed");
-    }     
+    }  */   
     
     
     int fdw = dup(fdr);

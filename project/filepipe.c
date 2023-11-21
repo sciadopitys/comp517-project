@@ -40,22 +40,29 @@ void filepipefn(char** left, char** right, int length) {
     }
     
     struct sockaddr_in address;
+    socklen_t addrlen = sizeof(address);
     address.sin_family = AF_LOCAL; 
     address.sin_port = 0;  
     address.sin_addr.s_addr = INADDR_ANY;
 
-    int bind_sock = bind(fdr, (struct sockaddr *)&address, sizeof(address));
+    int bind_sock = bind(fdr, (struct sockaddr *)&address, addrlen);
     if (bind_sock < 0)
     {
         printf("something went wrong: %s", strerror(errno));
-        perror("forking failed");
+        perror("bind failed");
     }
     
-    int connect_sock = connect(dummy, (struct sockaddr *)&address, sizeof(address));
+    int connect_sock = connect(dummy, (struct sockaddr *)&address, addrlen);
     if (connect_sock < 0)
     {
         printf("something went wrong: %s", strerror(errno));
-        perror("forking failed");
+        perror("connect failed");
+    }     
+    int accept_sock = accept(fdr, (struct sockaddr *)&address, &addrlen);
+    if (accept_sock < 0)
+    {
+        printf("something went wrong: %s", strerror(errno));
+        perror("accept failed");
     }     
     
     

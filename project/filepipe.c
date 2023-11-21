@@ -32,7 +32,7 @@ void filepipefn(char** left, char** right, int length) {
     int fdr = socket(AF_LOCAL, SOCK_DGRAM, 0);
     int dummy = socket(AF_LOCAL, SOCK_DGRAM, 0);
     /*int fdr = open("/tmp", O_RDWR|O_TMPFILE, S_IRUSR|S_IWUSR);*/
-    /*int fdr = open(buf, O_CREAT|O_RDWR|O_TRUNC, S_IRUSR|S_IWUSR);*/
+    /*int fdr = open(buf, O_CREAT|O_RDWR|O_TRUNC|O_SYNC, S_IRUSR|S_IWUSR);*/
     
     if (fdr < 0)
     {

@@ -12,6 +12,8 @@
 #include <stdbool.h>
 #include <math.h>
 #include <time.h>
+#include <sys/socket.h>
+#include <linux/in.h>
 #include "filepipe.h"
 
 
@@ -26,8 +28,9 @@ void filepipefn(char** left, char** right, int length) {
 
     char buf[12];
     snprintf(buf, 12, "pipe_%d", length);
-    int fdr = open(buf, O_CREAT|O_RDWR|O_TRUNC, S_IRUSR|S_IWUSR);
-    /*int fdr = socket(AF_LOCAL, SOCK_DGRAM, 0)*/
+    /*int fdr = open(buf, O_CREAT|O_RDWR|O_TRUNC, S_IRUSR|S_IWUSR);*/
+    int fdr = socket(AF_LOCAL, SOCK_DGRAM, 0);
+    int dummy = socket(AF_LOCAL, SOCK_DGRAM, 0);
     /*int fdr = open("/tmp", O_RDWR|O_TMPFILE, S_IRUSR|S_IWUSR);*/
     /*int fdr = open(buf, O_CREAT|O_RDWR|O_TRUNC, S_IRUSR|S_IWUSR);*/
     
@@ -35,6 +38,26 @@ void filepipefn(char** left, char** right, int length) {
     {
         printf("something went wrong: %s", strerror(errno));
     }
+    
+    struct sockaddr_in address;
+    address.sin_family = AF_LOCAL; 
+    address.sin_port = 0;  
+    address.sin_addr.s_addr = INADDR_ANY;
+
+    int bind_sock = bind(fdr, (struct sockaddr *)&address, sizeof(address));
+    if (bind_sock < 0)
+    {
+        printf("something went wrong: %s", strerror(errno));
+        perror("forking failed");
+    }
+    
+    int connect_sock = connect(dummy, (struct sockaddr *)&address, sizeof(address));
+    if (connect_sock < 0)
+    {
+        printf("something went wrong: %s", strerror(errno));
+        perror("forking failed");
+    }     
+    
     
     int fdw = dup(fdr);
     

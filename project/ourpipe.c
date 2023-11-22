@@ -159,7 +159,7 @@ int main(int argc, char *argv[]) {
     while ((opt = getopt_long(argc, argv, "thp:l:n:", long_options, &option_index)) != -1) {
         switch (opt) {
             case 't':
-                printf("Evaluating pipeline performance.\n");
+                printf("Evaluating pipeline performance (only works with file pipes).\n");
                 eval_time = 1;
                 break;
             case 'h':

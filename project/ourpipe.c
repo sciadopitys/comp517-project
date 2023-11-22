@@ -11,6 +11,7 @@
 #include "truepipe.h"
 #include "filepipe.h"
 
+
 enum { NS_PER_SECOND = 1000000000 };
 
 void sub_timespec(struct timespec t1, struct timespec t2, struct timespec *td)
@@ -118,7 +119,7 @@ void test_pipe(pipefunc pipefn, char *pipeline, int pipenum){
 
     // pipefn = &filepipefn;
 
-    (*pipefn)(left, right, count_args(left) + count_args(right));
+    (*pipefn)(left, right, count_args(left) + count_args(right), pipenum);
 }
 
 
@@ -134,11 +135,14 @@ int main(int argc, char *argv[]) {
 
     char *pipeline = "";
 
-    int n_pipes = 2;
     pipe_info *pipes[] = {
         truepipe_get(),
-        filepipe_get()
+        filepipe0_get(),
+        filepipe1_get(),
+        filepipe2_get(),
     };
+    
+    int n_pipes = sizeof(pipes) / sizeof(pipes[0]);
 
     static struct option long_options[] = {
         {"help", no_argument, 0, 'h'},

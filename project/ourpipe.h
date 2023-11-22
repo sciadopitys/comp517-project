@@ -1,7 +1,7 @@
 #ifndef ourpipe_h
 #define ourpipe_h
 
-typedef void (*pipefunc)(char**, char**, int);
+typedef void (*pipefunc)(char**, char**, int, int);
 
 typedef struct pipe_information {
     pipefunc pipefn;

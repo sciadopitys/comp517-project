@@ -17,7 +17,7 @@
 #include "filepipe.h"
 
 
-void filepipefn(char** left, char** right, int length) {
+void filepipefn(char** left, char** right, int length, int pipenum) {
     /*
     int fdr = open("/tmp", O_RDWR|O_TMPFILE, S_IRUSR|S_IWUSR);
        
@@ -26,11 +26,19 @@ void filepipefn(char** left, char** right, int length) {
     int r = rand();
     */
 
+    int fdr;
     char buf[12];
     snprintf(buf, 12, "pipe_%d", length);
-    /*int fdr = open(buf, O_CREAT|O_RDWR|O_TRUNC, S_IRUSR|S_IWUSR);*/
-    int fdr = socket(AF_LOCAL, SOCK_DGRAM, 0);
-    int dummy = socket(AF_LOCAL, SOCK_STREAM, 0);
+    if (pipenum == 3) {
+        fdr = open(buf, O_CREAT|O_RDWR|O_TRUNC, S_IRUSR|S_IWUSR);
+    } else if (pipenum == 4) {
+        fdr = open(buf, O_CREAT|O_RDWR|O_TRUNC|O_SYNC, S_IRUSR|S_IWUSR);
+    } else {
+        fdr = open("/tmp", O_RDWR|O_TMPFILE, S_IRUSR|S_IWUSR);
+    }
+    
+    /*int fdr = socket(AF_LOCAL, SOCK_DGRAM, 0);*/
+    /*int dummy = socket(AF_LOCAL, SOCK_STREAM, 0);*/
     /*int fdr = open("/tmp", O_RDWR|O_TMPFILE, S_IRUSR|S_IWUSR);*/
     /*int fdr = open(buf, O_CREAT|O_RDWR|O_TRUNC|O_SYNC, S_IRUSR|S_IWUSR);*/
     
@@ -40,6 +48,7 @@ void filepipefn(char** left, char** right, int length) {
         perror("file creation failed");
     }
     
+    /*
     struct sockaddr_in address;
     socklen_t addrlen = sizeof(address);
     address.sin_family = AF_LOCAL; 
@@ -53,7 +62,7 @@ void filepipefn(char** left, char** right, int length) {
         perror("bind failed");
     }
     
-    /*
+    
     
     int connect_sock = connect(dummy, (struct sockaddr *)&address, addrlen);
     if (connect_sock < 0)
@@ -104,11 +113,27 @@ void filepipefn(char** left, char** right, int length) {
 }    
 
 
-pipe_info* filepipe_get(){
+pipe_info* filepipe0_get(){
     pipe_info *pipe = (pipe_info *)malloc(sizeof(pipe_info));
     pipe->pipefn = &filepipefn;
-    pipe->name = strdup("File Pipe");
-    pipe->desc = strdup("Pipe which uses routing of stdout and stdin and a file for communication");
+    pipe->name = strdup("Temp File Pipe");
+    pipe->desc = strdup("Pipe which uses routing of stdout and stdin and a temporary file for communication (may not work on WSL)");
+    return pipe;
+}
+
+pipe_info* filepipe1_get(){
+    pipe_info *pipe = (pipe_info *)malloc(sizeof(pipe_info));
+    pipe->pipefn = &filepipefn;
+    pipe->name = strdup("Named File Pipe");
+    pipe->desc = strdup("Pipe which uses a named file for communication");
+    return pipe;
+}
+
+pipe_info* filepipe2_get(){
+    pipe_info *pipe = (pipe_info *)malloc(sizeof(pipe_info));
+    pipe->pipefn = &filepipefn;
+    pipe->name = strdup("Named, Synced File Pipe");
+    pipe->desc = strdup("Pipe which uses a named file for communication, all writes are immediately flushed to disk");
     return pipe;
 }
 
@@ -144,7 +169,7 @@ int main1( int argc, char *argv[] ) {
     char *const argv2[] = {"wc", "-l", NULL};  
     */
     
-    filepipefn(argv1, argv2, length); 
+    filepipefn(argv1, argv2, length, length); 
     
       
     return 1;  

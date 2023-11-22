@@ -13,7 +13,7 @@
 #include "filepipe.h"
 
 
-void truepipefn(char** left, char** right, int length) {
+void truepipefn(char** left, char** right, int length, int pipenum) {
     int    pipefd[2];
     pid_t  cpid;
 

@@ -13,22 +13,16 @@
 #include <math.h>
 #include <time.h>
 #include <sys/socket.h>
-#include <linux/in.h>
+// #include <linux/in.h>
+#include <arpa/inet.h>
 #include "filepipe.h"
 
 
 void filepipefn(char** left, char** right, int length, int pipenum) {
-    /*
-    int fdr = open("/tmp", O_RDWR|O_TMPFILE, S_IRUSR|S_IWUSR);
-       
-      
-    srand(time(NULL));
-    int r = rand();
-    */
 
     int fdr;
-    char buf[12];
-    snprintf(buf, 12, "pipe_%d", length);
+    char buf[24];
+    snprintf(buf, 24, "pipes/pipe_%d", length);
     if (pipenum == 3) {
         fdr = open(buf, O_CREAT|O_RDWR|O_TRUNC, S_IRUSR|S_IWUSR);
     } else if (pipenum == 4) {
@@ -37,48 +31,20 @@ void filepipefn(char** left, char** right, int length, int pipenum) {
         fdr = open("/tmp", O_RDWR|O_TMPFILE, S_IRUSR|S_IWUSR);
     }
     
-    /*int fdr = socket(AF_LOCAL, SOCK_DGRAM, 0);*/
-    /*int dummy = socket(AF_LOCAL, SOCK_STREAM, 0);*/
-    /*int fdr = open("/tmp", O_RDWR|O_TMPFILE, S_IRUSR|S_IWUSR);*/
-    /*int fdr = open(buf, O_CREAT|O_RDWR|O_TRUNC|O_SYNC, S_IRUSR|S_IWUSR);*/
     
     if (fdr < 0)
     {
         printf("something went wrong: %s", strerror(errno));
-        perror("file creation failed");
+        perror("file or socket creation failed");
     }
-    
-    /*
-    struct sockaddr_in address;
-    socklen_t addrlen = sizeof(address);
-    address.sin_family = AF_LOCAL; 
-    address.sin_port = 0;  
-    address.sin_addr.s_addr = INADDR_ANY;
-
-    int bind_sock = bind(fdr, (struct sockaddr *)&address, addrlen);
-    if (bind_sock < 0)
-    {
-        printf("something went wrong: %s", strerror(errno));
-        perror("bind failed");
-    }
-    
-    
-    
-    int connect_sock = connect(dummy, (struct sockaddr *)&address, addrlen);
-    if (connect_sock < 0)
-    {
-        printf("something went wrong: %s", strerror(errno));
-        perror("connect failed");
-    }     
-    int accept_sock = accept(fdr, (struct sockaddr *)&address, &addrlen);
-    if (accept_sock < 0)
-    {
-        printf("something went wrong: %s", strerror(errno));
-        perror("accept failed");
-    }  */   
     
     
     int fdw = dup(fdr);
+    if (fdw < 0)
+    {
+        printf("something went wrong: %s", strerror(errno));
+        perror("dup failed");
+    }    
     
     int rcl = fork();
     if (rcl < 0)

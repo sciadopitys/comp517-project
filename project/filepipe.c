@@ -19,7 +19,6 @@
 
 
 void filepipefn(char** left, char** right, int length, int pipenum) {
-
     int fdr;
     char buf[24];
     snprintf(buf, 24, "pipes/pipe_%d", length);

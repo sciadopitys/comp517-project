@@ -74,9 +74,13 @@ void test_pipe(pipefunc pipefn, char *pipeline, int pipenum){
 
     char* first_pipe = strchr(plstr, '|'); 
     if (first_pipe == NULL) {
-        // not a pipeline, just run
+        
+        printf("\nNot a pipeline.\n");
+        return;
+        /*
         char **args = split_args(plstr);
-        execvp(args[0], args);
+        execvp(args[0], args); 
+        */
     }
     *first_pipe = '\0'; // Add null terminator to make it two strings
 

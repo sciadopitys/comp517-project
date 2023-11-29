@@ -222,22 +222,24 @@ int main(int argc, char *argv[]) {
             break;
         }
 
-        while (pipeline[0] == '\0' && (selected_preset_pipe < 0 || selected_preset_pipe > n_preset_pipelines)) {
-            printf("\nPlease select a pipeline to run:\n");
+        if (pipeline[0] == '\0') {
+            while (selected_preset_pipe < 0 || selected_preset_pipe > n_preset_pipelines) {
+                printf("\nPlease select a pipeline to run. Default is custom pipeline:\n");
 
-            printf("(0) Enter custom string\n");
+                printf("(0) Enter custom string\n");
 
-            int i;
-            for(i=0; i<n_preset_pipelines; i++) {
-                printf("(%d) %s\n", i+1, preset_pipelines[i]);
-            }
+                int i;
+                for(i=0; i<n_preset_pipelines; i++) {
+                    printf("(%d) %s\n", i+1, preset_pipelines[i]);
+                }
 
-            if (getline(&inbuffer, &inbufsize, stdin) != -1) {
-                // Do something with the input
-                selected_preset_pipe = atoi(inbuffer);
-            } else {
-                printf("Error reading input.\n");
-                return -1;
+                if (getline(&inbuffer, &inbufsize, stdin) != -1) {
+                    // Do something with the input
+                    selected_preset_pipe = atoi(inbuffer);
+                } else {
+                    printf("Error reading input.\n");
+                    return -1;
+                }
             }
         }
 

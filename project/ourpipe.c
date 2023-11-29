@@ -11,6 +11,7 @@
 // our pipes
 #include "truepipe.h"
 #include "filepipe.h"
+#include "socketpipe.h"
 
 char **split_args(char *str){
     int ntok = 0;
@@ -145,6 +146,7 @@ int main(int argc, char *argv[]) {
 
     pipe_info *pipes[] = {
         truepipe_get(),
+        socketpipe_get(),
         filepipe0_get(),
         filepipe1_get(),
         filepipe2_get(),
@@ -199,7 +201,7 @@ int main(int argc, char *argv[]) {
             pipeline = "";
         }
         while (selected_pipe <= 0 || selected_pipe > (n_pipes + 1)) {
-            printf("\nPlease select a pipe to test, or press 5 to exit:\n");
+            printf("\nPlease select a pipe to test, or press %d to exit:\n", n_pipes + 1);
 
             int i;
             for(i=0; i<n_pipes; i++) {
@@ -215,7 +217,7 @@ int main(int argc, char *argv[]) {
             }
         }
         
-        if (selected_pipe == 5) {
+        if (selected_pipe == n_pipes + 1) {
             count = 50;
             break;
         }

@@ -169,11 +169,11 @@ int main(int argc, char *argv[]) {
     while ((opt = getopt_long(argc, argv, "rthp:l:n:", long_options, &option_index)) != -1) {
         switch (opt) {
             case 'r':
-                printf("User can specify different pipelines in sequence (only works with file pipes).\n");
+                printf("User can specify different pipelines in sequence.\n");
                 max_count = 50;
                 break;
             case 't':
-                printf("Evaluating pipeline performance (only works with file pipes).\n");
+                printf("Evaluating pipeline performance.\n");
                 eval_time = 1;
                 break;
             case 'h':

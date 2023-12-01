@@ -12,28 +12,38 @@
 #include <stdbool.h>
 #include <math.h>
 #include <time.h>
+#include <sys/socket.h>
+// #include <linux/in.h>
+#include <arpa/inet.h>
 #include "filepipe.h"
 
 
-void filepipefn(char** left, char** right, int length) {
-    /*
-    int fdr = open("/tmp", O_RDWR|O_TMPFILE, S_IRUSR|S_IWUSR);
-       
-      
-    srand(time(NULL));
-    int r = rand();
-    */
-
-    char buf[12];
-    snprintf(buf, 12, "pipe_%d", length);
-    int fdr = open(buf, O_CREAT|O_RDWR|O_TRUNC, S_IRUSR|S_IWUSR);
+void filepipefn(char** left, char** right, int length, int pipenum) {
+    int fdr;
+    char buf[24];
+    snprintf(buf, 24, "pipes/pipe_%d", length);
+    if (pipenum == 4) {
+        fdr = open(buf, O_CREAT|O_RDWR|O_TRUNC, S_IRUSR|S_IWUSR);
+    } else if (pipenum == 5) {
+        fdr = open(buf, O_CREAT|O_RDWR|O_TRUNC|O_SYNC, S_IRUSR|S_IWUSR);
+    } else {
+        fdr = open("/tmp", O_RDWR|O_TMPFILE, S_IRUSR|S_IWUSR);
+    }
+    
     
     if (fdr < 0)
     {
         printf("something went wrong: %s", strerror(errno));
+        perror("file or socket creation failed");
     }
     
+    
     int fdw = dup(fdr);
+    if (fdw < 0)
+    {
+        printf("something went wrong: %s", strerror(errno));
+        perror("dup failed");
+    }    
     
     int rcl = fork();
     if (rcl < 0)
@@ -68,11 +78,27 @@ void filepipefn(char** left, char** right, int length) {
 }    
 
 
-pipe_info* filepipe_get(){
+pipe_info* filepipe0_get(){
     pipe_info *pipe = (pipe_info *)malloc(sizeof(pipe_info));
     pipe->pipefn = &filepipefn;
-    pipe->name = strdup("File Pipe");
-    pipe->desc = strdup("Pipe which uses routing of stdout and stdin and a file for communication");
+    pipe->name = strdup("Temp File Pipe");
+    pipe->desc = strdup("Pipe which uses routing of stdout and stdin and a temporary file for communication (may not work on WSL)");
+    return pipe;
+}
+
+pipe_info* filepipe1_get(){
+    pipe_info *pipe = (pipe_info *)malloc(sizeof(pipe_info));
+    pipe->pipefn = &filepipefn;
+    pipe->name = strdup("Named File Pipe");
+    pipe->desc = strdup("Pipe which uses a named file for communication");
+    return pipe;
+}
+
+pipe_info* filepipe2_get(){
+    pipe_info *pipe = (pipe_info *)malloc(sizeof(pipe_info));
+    pipe->pipefn = &filepipefn;
+    pipe->name = strdup("Named, Synced File Pipe");
+    pipe->desc = strdup("Pipe which uses a named file for communication, all writes are immediately flushed to disk");
     return pipe;
 }
 
@@ -108,7 +134,7 @@ int main1( int argc, char *argv[] ) {
     char *const argv2[] = {"wc", "-l", NULL};  
     */
     
-    filepipefn(argv1, argv2, length); 
+    filepipefn(argv1, argv2, length, length); 
     
       
     return 1;  

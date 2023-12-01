@@ -32,3 +32,7 @@ from the investigation. It is anticipated that at the
 [midterm report](../midterm/README.md) you will a running
 prototype that you can demo. For the final we anticipate an
 independent project that can be run by the professor.
+
+## Compiling and Running our Program
+
+We have provided a makefile for compiliation purposes. Our shell program is ./ourpipe. By default, the program terminates after performing a single pipeline, and does not report the time taken by the pipeline. Specifying the -r argument makes the program loop after performing each pipeline. Specifying the -t argument makes the program report the CLOCK_REALTIME time taken by each pipeline.

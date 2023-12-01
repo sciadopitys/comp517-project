@@ -22,9 +22,9 @@ void filepipefn(char** left, char** right, int length, int pipenum) {
     int fdr;
     char buf[24];
     snprintf(buf, 24, "pipes/pipe_%d", length);
-    if (pipenum == 3) {
+    if (pipenum == 4) {
         fdr = open(buf, O_CREAT|O_RDWR|O_TRUNC, S_IRUSR|S_IWUSR);
-    } else if (pipenum == 4) {
+    } else if (pipenum == 5) {
         fdr = open(buf, O_CREAT|O_RDWR|O_TRUNC|O_SYNC, S_IRUSR|S_IWUSR);
     } else {
         fdr = open("/tmp", O_RDWR|O_TMPFILE, S_IRUSR|S_IWUSR);

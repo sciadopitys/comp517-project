@@ -169,7 +169,7 @@ int main(int argc, char *argv[]) {
     while ((opt = getopt_long(argc, argv, "rthp:l:n:", long_options, &option_index)) != -1) {
         switch (opt) {
             case 'r':
-                printf("User can specify different pipelines in sequence.\n");
+                printf("User keep specify different pipelines after the first.\n");
                 max_count = 50;
                 break;
             case 't':
